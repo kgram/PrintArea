@@ -91,8 +91,13 @@
             return '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01' + transitional + '//EN" "http://www.w3.org/TR/html4/' + dtd +  '.dtd">';
         },
         getHead : function() {
+            var base = "";
             var extraHead = "";
             var links = "";
+
+            if ($(document).find('head > base').length > 0) {
+                base += $(document).find('head > base')[0].outerHTML;
+            }
 
             if ( settings.extraHead ) settings.extraHead.replace( /([^,]+)/g, function(m){ extraHead += m });
 
@@ -110,7 +115,7 @@
                     });
             if ( settings.extraCss ) settings.extraCss.replace( /([^,\s]+)/g, function(m){ links += '<link type="text/css" rel="stylesheet" href="' + m + '">' });
 
-            return "<head><title>" + settings.popTitle + "</title>" + extraHead + links + "</head>";
+            return "<head><title>" + settings.popTitle + "</title>" + base + extraHead + links + "</head>";
         },
         getBody : function ( elements ) {
             var htm = "";
